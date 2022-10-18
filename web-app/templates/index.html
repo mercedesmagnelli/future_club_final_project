@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+  <title>Predicción de accidente cardiovascular</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+
+<body style="background-color: #d2deed">
+
+ 
+  
+    <div style="app-header">
+      <h2>Predictor de stroke</h2>
+      <p>bla bla bla.</p>
+      <p>Selecciona segun corresponda.</p>
+    </div>
+
+
+  <form class="text-center" style="border-style: solid; color: #757575; margin-bottom:10px" method="POST" action="/predict">
+    <table width="100%">
+     <div>
+          <tr>
+            <td>
+              <div class="form-field">{{ form.age.label }} {{ form.age(size=20) }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="form-field">{{ form.gender.label }} {{form.gender}} </div>
+            </td>
+          </tr>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-field">{{ form.hypertension.label }} {{form.hypertension}} </div>
+          </td>
+        </tr>
+      </tr>
+      <tr>
+        <td>
+          <div class="form-field">{{ form.enfermedad_coronaria.label }} {{form.enfermedad_coronaria}} </div>
+        </td>
+      </tr>
+    </tr>
+    <tr>
+      <td>
+        <div class="form-field">{{ form.work_type.label }} {{form.work_type}} </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form-field">{{ form.residence_type.label }} {{form.residence_type}} </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form-field">{{ form.bmi.label }} {{form.bmi}} </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form-field">{{ form.glucose.label }} {{form.glucose}} </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form-field">{{ form.smoker.label }} {{form.smoker}} </div>
+      </td>
+    </tr>
+ 
+    <tr>
+      <td>
+        <input id="submit" style="margin-bottom: 10px;" name="submit" type="submit" onclick="startSpinner()" value="Predict">
+      </td>
+    </tr>
+    
+    </div>
+      
+  <script>
+
+
+
+
+window.onload = function exampleFunction() { 
+  
+  // var output = document.getElementById("output");
+  // output.style.display = "none"
+  
+} 
+
+    function startSpinner() {
+      var x = document.getElementById("loader");
+      x.style.display = "block";
+      var output = document.getElementById("output");
+      output.style.display = "none"
+      setTimeout(function () {
+        var y = document.getElementById("output");
+        var x = document.getElementById("loader");
+        var a = document.getElementById("a");
+        var b = document.getElementById("b");
+        x.style.display = "none";
+        y.style.display = "block"
+        a.style.display = "block"
+        b.style.display = "block"
+      }, 3000);
+
+    }
+  </script>
+
+</body>
+
+</html>
