@@ -9,10 +9,12 @@ from wtforms.validators import NumberRange
 class PredictForm(FlaskForm):
    age = IntegerField('Age', [NumberRange(0, 99, "Choose a value between 0 and 99")])
    gender = SelectField('Gender', choices=[("female", "female"), ("male", "male")])
-   hypertension = SelectField('hypertension', choices = ["si", "no"])
-   enfermedad_coronaria = SelectField('Enfermedad Coronaria', choices = ["si", "no"])
    work_type = SelectField('Tipo de Trabajo', choices = ["wt1", "wt2", "wt3", "wt4"])
    residence_type = SelectField('Tipo de Residencia', choices = ["r1", "r2", "r3", "r4"])
+
+   hypertension = SelectField('hypertension', choices = ["si", "no"])
+   enfermedad_coronaria = SelectField('Enfermedad Coronaria', choices = ["si", "no"])
+   
    bmi = DecimalField('BMI')
    glucose = DecimalField('Nivel de glucosa')
    smokevalues = ["formerly smoked", "smoker", "never", "Unknown"]
