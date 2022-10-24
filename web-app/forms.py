@@ -15,7 +15,8 @@ class PredictForm(FlaskForm):
    hypertension = SelectField('hypertension', choices = ["si", "no"])
    enfermedad_coronaria = SelectField('Enfermedad Coronaria', choices = ["si", "no"])
    
-   bmi = DecimalField('BMI')
+   height = DecimalField('BMI')
+   weight = DecimalField('BMI')
    glucose = DecimalField('Nivel de glucosa')
    smokevalues = ["formerly smoked", "smoker", "never", "Unknown"]
    smoker = SelectField('Fumar', choices = smokevalues)
