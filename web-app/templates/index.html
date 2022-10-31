@@ -6,184 +6,20 @@
   <meta charset="utf-8">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
   <title>Predicción de accidente cardiovascular</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
-  <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
   
 </head>
 
 <body style="background-color: #d2deed">
 
    
-    <div class="container mt-5">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-8">
-                <form id="regForm">
-                    <h1 id="register">Calculadora de riesgo de ACV</h1>
-                    <div class="all-steps" id="all-steps"> 
-                      <span class="step"><i class="fa fa-user"></i></span> 
-                      <span class="step"><i class="fa-solid fa-venus-mars"></i></span>
-                      <span class="step"><i class="fa fa-shopping-bag"></i></span>
-                      <span class="step"><i class="fa fa-car"></i></span>
-                      <span class="step"><i class="fa fa-spotify"></i></span>
-                      <span class="step"><i class="fa fa-mobile-phone"></i></span>
-                      <span class="step"><i class="fa fa-mobile-phone"></i></span>
-                      <span class="step"><i class="fa fa-mobile-phone"></i></span>
-                      <span class="step"><i class="fa fa-mobile-phone"></i></span>
-                      <span class="step"><i class="fa fa-mobile-phone"></i></span>
-                    </div>
-    
-                    <div class="tab">
-                      <h6>¿Qué edad tenés?</h6>
-                        <p>
-                        <!-- <input oninput="this.className = ''"   name="fname"> </p>--> 
-                        <div class="form-field" oninput="this.className = ''"   name="fname">{{ form.age(size=20) }}</div>
-                        
-                    </div>
-                    <div class="tab">
-                      <h6>¿Cuál es tu género?</h6>
-                      <div class="form-field"></div>
+    <form id="formprincipal" method="POST" action="/predict" >
+        <input type="text" name="name" required>
+        <input type="email" name="email" required>
+        <button type="submit">Send</button>
 
-                         <div class="form-field" oninput="this.className = ''" name="dd"> {{form.gender}} </div>
-                        
-                    </div>
-                    <div class="tab">
-                        <h6>¿Qué tipo de trabajo tenés?</h6>
-                        <div class="form-field" oninput="this.className = ''" name="dd"> {{form.work_type}} </div>
-                                             
-                    </div>
-                    <div class="tab">
-                        <h6>Tipo de residencia</h6>
-                        <div class="form-field" oninput="this.className = ''" name="dd"> {{form.residence_type}} </div>
-                    </div>
-    
-                    <div class="tab">
-                        <h6>¿Sufrís de hipertensión?</h6>
-                        <div class="form-field" oninput="this.className = ''" name="dd"> {{form.hypertension}} </div>
-                    </div>
-    
-    
-                    <div class="tab">
-                        <h6>¿Cuál es tu altura?</h6>
-                        <div class="form-field" oninput="this.className = ''" name="dd"> {{form.height}} </div>
-                    </div>
-
-                        
-                    <div class="tab">
-                        <h6>¿Cuál es tu peso?</h6>
-                        <div class="form-field" oninput="this.className = ''" name="dd"> {{form.weight}} </div>
-                    </div>
-
-                    <div class="tab">
-                        <h6>¿Cual es tu nivel de glucosa?</h6>
-                        <div class="form-field" oninput="this.className = ''" name="dd"> {{form.glucose}} </div>
-                    </div>
-                    <div class="tab">
-                        <h6>¿Cuál es tu relación con el cigarro?</h6>
-                        <div class="form-field" oninput="this.className = ''" name="dd"> {{form.smoker}} </div>
-                    </div>
-                   
-
-
-
-                    <div class="thanks-message text-center" id="text-message"> <img src="https://i.imgur.com/O18mJ1K.png" width="100" class="mb-4">
-                        <h3>Thankyou for your feedback!</h3> <span>Thanks for your valuable information. It helps us to improve our services!</span>
-                    </div>
-                    <div style="overflow:auto;" id="nextprevious">
-                        <div style="float:right;">
-                          <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-angle-double-left"></i></button> 
-                          <button type="button" id="nextBtn" onclick="nextPrev(1)"><i class="fa fa-angle-double-right"></i></button> </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-      
-      <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
-      
-  <script>
-
-var currentTab = 0;
-              document.addEventListener("DOMContentLoaded", function(event) {
-
-
-              showTab(currentTab);
-
-              });
-
-              function showTab(n) {
-              var x = document.getElementsByClassName("tab");
-              x[n].style.display = "block";
-              if (n == 0) {
-              document.getElementById("prevBtn").style.display = "none";
-              } else {
-              document.getElementById("prevBtn").style.display = "inline";
-              }
-              if (n == (x.length - 1)) {
-              document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
-              } else {
-              document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
-              }
-              fixStepIndicator(n)
-              }
-
-              function nextPrev(n) {
-              var x = document.getElementsByClassName("tab");
-              if (n == 1 && !validateForm()) return false;
-              x[currentTab].style.display = "none";
-              currentTab = currentTab + n;
-              if (currentTab >= x.length) {
-            
-              document.getElementById("nextprevious").style.display = "none";
-              document.getElementById("all-steps").style.display = "none";
-              document.getElementById("register").style.display = "none";
-              document.getElementById("text-message").style.display = "block";
-
-
-
-
-              }
-              showTab(currentTab);
-              }
-
-              function validateForm() {
-                   var x, y, i, valid = true;
-                   x = document.getElementsByClassName("tab");
-                   y = x[currentTab].getElementsByTagName("input");
-                   for (i = 0; i < y.length; i++) {
-                       if (y[i].value == "") {
-                           y[i].className += " invalid";
-                           valid = false;
-                       }
-
-
-                   }
-                   if (valid) {
-                       document.getElementsByClassName("step")[currentTab].className += " finish";
-                   }
-                   return valid;
-               }
-
-               function fixStepIndicator(n) {
-                   var i, x = document.getElementsByClassName("step");
-                   for (i = 0; i < x.length; i++) {
-                       x[i].className = x[i].className.replace(" active", "");
-                   }
-                   x[n].className += " active";
-               }
-
-
-
-</script>
 
 </body>
+
+
 
 </html>

@@ -1,4 +1,5 @@
 from flask import Flask, url_for, render_template, redirect
+from collections import defaultdict
 from forms import PredictForm
 from flask import request, sessions
 import requests
@@ -30,34 +31,34 @@ def predict():
 
         # NOTE: generate iam_token and retrieve ml_instance_id based on provided documentation
         header = {'Content-Type': 'application/json', 'Authorization': 'Bearer '
-                 + "eyJraWQiOiIyMDIyMDkxMzA4MjciLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02NjcwMDA0RlFDIiwiaWQiOiJJQk1pZC02NjcwMDA0RlFDIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiOGFjNjg5ZDgtMzA2Yi00MDY3LThiNjktNjZiZjgzNTQ0NGY0IiwiaWRlbnRpZmllciI6IjY2NzAwMDRGUUMiLCJnaXZlbl9uYW1lIjoiTWVyY2VkZXMgQmVsZW4iLCJmYW1pbHlfbmFtZSI6Ik1hZ25lbGxpIiwibmFtZSI6Ik1lcmNlZGVzIEJlbGVuIE1hZ25lbGxpIiwiZW1haWwiOiJtbWFnbmVsbGlAaWJtLmNvbSIsInN1YiI6Im1tYWduZWxsaUBpYm0uY29tIiwiYXV0aG4iOnsic3ViIjoibW1hZ25lbGxpQGlibS5jb20iLCJpYW1faWQiOiJJQk1pZC02NjcwMDA0RlFDIiwibmFtZSI6Ik1lcmNlZGVzIEJlbGVuIE1hZ25lbGxpIiwiZ2l2ZW5fbmFtZSI6Ik1lcmNlZGVzIEJlbGVuIiwiZmFtaWx5X25hbWUiOiJNYWduZWxsaSIsImVtYWlsIjoibW1hZ25lbGxpQGlibS5jb20ifSwiYWNjb3VudCI6eyJib3VuZGFyeSI6Imdsb2JhbCIsInZhbGlkIjp0cnVlLCJic3MiOiIzMzU4ZDhjZjQ3NTY0MWExOTNmMWJjYTQyNjY4MWVjMSIsImZyb3plbiI6dHJ1ZX0sImlhdCI6MTY2NTU5NTQzNywiZXhwIjoxNjY1NTk5MDM3LCJpc3MiOiJodHRwczovL2lhbS5jbG91ZC5pYm0uY29tL29pZGMvdG9rZW4iLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.uWsmtqOt-2YCgkgRzjIM6l2jaRbZv7YTtP2BQATyvxS3gY6OvOPFKKG0QMkaIEljtyBRxuywB5GKP5ZVluYV7zwfomgjJFc_52WGrjKuDvsW-ZFC5w00fsNZ4G9LNnLF8oVohEZTKE9YaSG9bIpzsIFl2TdKQkUwzlLLj3lriNPrTe8CmHh2-rtAOttXKGlkeIs1mINBygGfSWQQ5TRrAHloWBQljJTvQevx9oUHnd7LtazQH7d6V1KbLHxGeRFFUY7mxteQiMjgrYjD3c4nVVhmXkBAJ5yQhp46vkBLoizUhARCJY3AakunqCK8_C-YNtJI50kjd8HmV9s_bcPpmA"}
+                 + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpGdExSb3BtNUl3N0hMUGhXMzg4S3pJOXpsWkExaUVHaGRoMXFUeXpmRGMifQ.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciIsImNhbl9wcm92aXNpb24iLCJtYW5hZ2VfY2F0YWxvZyIsImNyZWF0ZV9wcm9qZWN0IiwiY3JlYXRlX3NwYWNlIiwiYWNjZXNzX2NhdGFsb2ciLCJzaWduX2luX29ubHkiXSwiZ3JvdXBzIjpbMTAwMDBdLCJzdWIiOiJhZG1pbiIsImlzcyI6IktOT1hTU08iLCJhdWQiOiJEU1giLCJ1aWQiOiIxMDAwMzMwOTk5IiwiYXV0aGVudGljYXRvciI6ImRlZmF1bHQiLCJkaXNwbGF5X25hbWUiOiJhZG1pbiIsImlhdCI6MTY2NzI0MTIzNywiZXhwIjoxNjY3Mjg0NDAxfQ.UxC_WpwyftBkeEFtxogX1F7iopBGmDRti8_38zqV9CW8BfdxjoJGfWFGDAhm52nhxA8yYw1fc2SrhL_xvmQuQjEryu2ubsPYvKyJ2Qv05NNovCMtyrBZWI-Ktt8MQbRMMVn7IYYnggAnCaaLsOSn_fKOq1ea8iY1uKzZAdj8jgwrgAdcoFjw-Styi_W4HhkKMX4AnElN7Flx0YumMuKRwnvYJSCIxSuH_IajygHy6fUk2nqk8qGRu8iBnzWcb5VCLX6MWW8ZGuS3DX0GcgI37tKDdWk1oTmN7ujr2JVHm3yfUpb5qEWwU_43tDiWyh_z7OAuzweR4lrqrgqV2PaGxQ"}
 
-        if(form.bmi.data == None): 
-          python_object = []
-        else:
-          python_object = [form.age.data, form.sex.data, float(form.bmi.data),
-            form.children.data, form.smoker.data, form.region.data]
+        python_object = ["male",79,0,1,"no","private","urban",98.4,25.2,"former smoker"]
         #Transform python objects to  Json
 
         userInput = []
         userInput.append(python_object)
 
         # NOTE: manually define and pass the array(s) of values to be scored in the next line
-        payload_scoring = {"input_data": [{"fields": ["age", "sex", "bmi",
-          "children", "smoker", "region"], "values": userInput }]}
+        payload_scoring = {"input_data": [{"fields": ["gender", "age", "hypertension","heart_desease", "ever_married", "work_type", "Residence_type", "avg_glucose_level", "bmi", "smoking_status"], "values": userInput }]}
 
-        response_scoring = requests.post("https://us-south.ml.cloud.ibm.com/ml/v4/deployments/1ae7bef0-3375-41fa-ae4d-4cad5a8bbc6d/predictions?version=2022-10-12", json=payload_scoring, headers=header)
+        response_scoring = requests.post("https://cpd-zen.cpd-demo2-dal-cluster-cc3f7f98932dd5458e6ef8ebaf682399-0000.us-south.containers.appdomain.cloud/ml/v4/deployments/b3846840-2881-44ca-a6aa-59e5107622a4/predictions?version=2022-10-28", json=payload_scoring, headers=header, verify=False)
         output = json.loads(response_scoring.text)
+        print("---respuesta de la api----")
         print(output)
+        print("---respuesta de la api----")
+
         for key in output:
           ab = output[key]
+          print(ab)
         
 
         for key in ab[0]:
           bc = ab[0][key]
         
         roundedCharge = round(bc[0][0],2)
-
+        print(".......")
+        print(roundedCharge)
   
         form.abc = roundedCharge # this returns the response back to the front page
         return render_template('index.html', form=form)
