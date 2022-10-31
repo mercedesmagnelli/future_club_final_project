@@ -56,9 +56,9 @@ def predict():
         for key in ab[0]:
           bc = ab[0][key]
         
-        roundedCharge = round(bc[0][0],2)
+        stroke = round(bc[0][0],2)
         print(".......")
-        print(roundedCharge)
+        print(stroke)
   
-        form.abc = roundedCharge # this returns the response back to the front page
+        form.abc = stroke # this returns the response back to the front page
         return render_template('index.html', form=form)
