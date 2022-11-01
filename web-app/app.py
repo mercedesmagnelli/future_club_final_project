@@ -1,6 +1,5 @@
 from flask import Flask, url_for, render_template, redirect
 from collections import defaultdict
-from forms import PredictForm
 from flask import request, sessions
 import requests
 from flask import json
@@ -21,19 +20,19 @@ if __name__ == "__main__":
 @app.route('/', methods=('GET', 'POST'))
 
 def startApp():
-    form = PredictForm()
-    return render_template('index.html', form=form)
+    return render_template('index.html')
 
 @app.route('/predict', methods=('GET', 'POST'))
 def predict():
-    form = PredictForm()
-    if form.submit():
+      # NOTE: generate iam_token and retrieve ml_instance_id based on provided documentation
 
-        # NOTE: generate iam_token and retrieve ml_instance_id based on provided documentation
+        requestValues = request.get_json()
+       
         header = {'Content-Type': 'application/json', 'Authorization': 'Bearer '
                  + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpGdExSb3BtNUl3N0hMUGhXMzg4S3pJOXpsWkExaUVHaGRoMXFUeXpmRGMifQ.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciIsImNhbl9wcm92aXNpb24iLCJtYW5hZ2VfY2F0YWxvZyIsImNyZWF0ZV9wcm9qZWN0IiwiY3JlYXRlX3NwYWNlIiwiYWNjZXNzX2NhdGFsb2ciLCJzaWduX2luX29ubHkiXSwiZ3JvdXBzIjpbMTAwMDBdLCJzdWIiOiJhZG1pbiIsImlzcyI6IktOT1hTU08iLCJhdWQiOiJEU1giLCJ1aWQiOiIxMDAwMzMwOTk5IiwiYXV0aGVudGljYXRvciI6ImRlZmF1bHQiLCJkaXNwbGF5X25hbWUiOiJhZG1pbiIsImlhdCI6MTY2NzI0MTIzNywiZXhwIjoxNjY3Mjg0NDAxfQ.UxC_WpwyftBkeEFtxogX1F7iopBGmDRti8_38zqV9CW8BfdxjoJGfWFGDAhm52nhxA8yYw1fc2SrhL_xvmQuQjEryu2ubsPYvKyJ2Qv05NNovCMtyrBZWI-Ktt8MQbRMMVn7IYYnggAnCaaLsOSn_fKOq1ea8iY1uKzZAdj8jgwrgAdcoFjw-Styi_W4HhkKMX4AnElN7Flx0YumMuKRwnvYJSCIxSuH_IajygHy6fUk2nqk8qGRu8iBnzWcb5VCLX6MWW8ZGuS3DX0GcgI37tKDdWk1oTmN7ujr2JVHm3yfUpb5qEWwU_43tDiWyh_z7OAuzweR4lrqrgqV2PaGxQ"}
 
         python_object = ["male",79,0,1,"no","private","urban",98.4,25.2,"former smoker"]
+      
         #Transform python objects to  Json
 
         userInput = []
@@ -44,6 +43,7 @@ def predict():
 
         response_scoring = requests.post("https://cpd-zen.cpd-demo2-dal-cluster-cc3f7f98932dd5458e6ef8ebaf682399-0000.us-south.containers.appdomain.cloud/ml/v4/deployments/b3846840-2881-44ca-a6aa-59e5107622a4/predictions?version=2022-10-28", json=payload_scoring, headers=header, verify=False)
         output = json.loads(response_scoring.text)
+        
         print("---respuesta de la api----")
         print(output)
         print("---respuesta de la api----")
@@ -57,8 +57,9 @@ def predict():
           bc = ab[0][key]
         
         stroke = round(bc[0][0],2)
+        
         print(".......")
         print(stroke)
   
-        form.abc = stroke # this returns the response back to the front page
-        return render_template('index.html', form=form)
+         # this returns the response back to the front page
+        return '{"key":' + str(stroke) + '}'
