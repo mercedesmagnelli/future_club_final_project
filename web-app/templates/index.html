@@ -212,7 +212,6 @@ function Survey(survey) {
     const question2Radios = survey.querySelectorAll("[name='question_2']");
     const question3CheckBoxes = survey.querySelectorAll("[name='question_3']");
     const question4Radios = survey.querySelectorAll("[name='question_4']");
-    const question4Textarea = survey.querySelector("[name='recommendText']");
     const question_5_Radio = survey.querySelector("[name='name']");
     const allPanels = Array.from(survey.querySelectorAll(".survey__panel"));
     let progressbarStep = Array.from(
@@ -371,10 +370,6 @@ function Survey(survey) {
       const errorElement = currentPanel.querySelector(".error-message");
   
       if (!formData[index].hasOwnProperty("answer") && +index === 5) {
-        checkRequired(question5Name);
-        checkEmail(question5Email);
-        checkSelection(question5Country);
-        checkAge(question5Age);
       } else if (formData[index].hasOwnProperty("answer") && +index === 5) {
         const req = requirement.split(";");
         let data = Object.keys(formData[index].answer);
@@ -384,10 +379,6 @@ function Survey(survey) {
           res = req.includes(data[i]) ? data[i] : "";
           arr.push(res);
         }
-        if (arr.includes("name")) checkRequired(question5Name);
-        if (arr.includes("email")) checkEmail(question5Email);
-        if (arr.includes("country")) checkSelection(question5Country);
-        if (arr.includes("age")) checkAge(question5Age);
         if (
           arr.length === 4 &&
           arr.every((elem) => formData[index].answer.hasOwnProperty(elem))
@@ -421,7 +412,7 @@ function Survey(survey) {
         prevButton.disabled = false;
         prevButton.setAttribute("aria-hidden", false);
       }
-      if (+currentPanel.dataset.index === 5) {
+      if (+currentPanel.dataset.index === 6) {
         nextButton.disabled = true;
         nextButton.setAttribute("aria-hidden", true);
         submitButton.disabled = false;
@@ -440,7 +431,7 @@ function Survey(survey) {
         prevButton.disabled = true;
         prevButton.setAttribute("aria-hidden", true);
       }
-      if (+currentPanel.dataset.index < 5) {
+      if (+currentPanel.dataset.index < 6) {
         nextButton.disabled = false;
         nextButton.setAttribute("aria-hidden", false);
         submitButton.disabled = true;
@@ -500,17 +491,9 @@ function Survey(survey) {
         elem.addEventListener("change", updateFormData)
       );
       let {
-        question4Textarea,
-        question5Name,
-        question5Email,
-        question5Country,
-        question5Age
+       
       } = inputs;
-      question4Textarea.addEventListener("change", updateFormData);
-      question5Name.addEventListener("change", updateFormData);
-      question5Email.addEventListener("change", updateFormData);
-      question5Country.addEventListener("change", updateFormData);
-      question5Age.addEventListener("change", updateFormData);
+     
     }
     nextButton.addEventListener("click", handleNextButton);
     prevButton.addEventListener("click", handleprevButton);
