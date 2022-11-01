@@ -11,7 +11,7 @@
 <body style="background-color: white">
    
 
-          <div class="container">
+        <div class="container">
             <header class="header">
               <h1 id="title" class="header__title">Predictor de riesgo de ACV.</h1>
               <p id="description" class="header__description">
@@ -101,34 +101,66 @@
                   <p class="error-message"></p>
                 </section>
           
-                <section class="survey__panel" aria-hidden="true" data-index="5" data-panel="fifthPanel" data-requirement="name;email;country;age">
+                <section class="survey__panel" aria-hidden="true" data-index="5" data-panel="fifthPanel">
                   <h2 class="survey__panel__question">
-                    <span class="visuallyhidden">Question 5 of 5 </span>Please fill your details
+                    <!--
+                        acá creo que debería poner otra clase para que se centre mejor pero por ahora 
+                        que funcion así
+                    -->
+                    <span class="visuallyhidden">Question 5 of 9 </span>¿Cuál es tu tipo de trabajo?
                   </h2>
-                  <div class="survey__panel__personaldetails">
-                    <div class="form-group">
-                      <label for="name" id="name-label" class="name">Name:</label>
-                      <input type="text" id="name" name="name" required placeholder="Your Name" />
-                      <p class="error-message"></p>
-                    </div>
-                    <div class="form-group">
-                      <label for="email" id="email-label" class="email">Email:</label>
-                      <input type="email" id="email" name="email" required placeholder="Your Email" />
-                      <p class="error-message"></p>
-                    </div>
-                    <div class="form-group">
-                      <select name="country" id="dropdown" name="country">
-                        <option value>Your Country</option>
-                      </select>
-                      <p class="error-message"></p>
-                    </div>
-                    <div class="form-group">
-                      <label for="number" id="number-label" class="age">Age</label>
-                      <input type="number" id="number" name="age" min="0" max="150" required placeholder="Age" />
-                      <p class="error-message"></p>
-                    </div>
+                  <div>
+                    <div class="survey__panel__personaldetails">
+                        <div class="survey__panel__period">
+                            <div class="form-group">
+                              <input id="work_type_children" type="radio" name="question_5" value="children" />
+                              <label for="work_type_children">Niño</label>
+                        </div>
+                        <div class="survey__panel__period">
+                            <div class="form-group">
+                              <input id="gen_fem" type="radio" name="question_5" value="govt_job" />
+                              <label for="gen_fem">Sector público</label>
+                        </div>
                   </div>
+                  <div class="survey__panel__personaldetails">
+                    <div class="survey__panel__period">
+                        <div class="form-group">
+                          <input id="gen_fem" type="radio" name="question_5" value="never_worked" />
+                          <label for="gen_fem">Sector privado</label>
+                    </div>
+                    <div class="survey__panel__period">
+                        <div class="form-group">
+                          <input id="gen_fem" type="radio" name="question_5" value="private" />
+                          <label for="gen_fem">Nunca trabajé</label>
+                    </div>
+              </div>
+              <div class="survey__panel__personaldetails">
+                <div class="survey__panel__period" >
+                    <div class="form-group">
+                      <input id="gen_fem" type="radio" name="question_5" value="self_employed" />
+                      <label for="gen_fem">Autonómo</label>
+                </div>
+          </div>        
+        </div>
                 </section>
+                <section class="survey__panel" aria-hidden="true" data-index="6" data-panel="sixthPanel">
+                    <h2 class="survey__panel__question">
+                      <span class="visuallyhidden">Question 6 of 9 </span>¿Cuál es tu tipo de residencia?
+                    </h2>
+                    <div class="survey__panel__period">
+                        <div class="form-group">
+                          <input id="res_rural" type="radio" name="question_6" value="rural" />
+                          <label for="res_rural">Rural</label>
+                        </div>
+                        <div class="form-group">
+                          <input id="res_urb" type="radio" name="question_6" value="urban" />
+                          <label for="res_urb">Urbano</label>
+                        </div>
+                      </div>
+                  </section>
+
+
+
                 <div class="form-buttons">
                   <button class="button" type="button" name="prev" disabled="disabled" aria-label="Previous" aria-hidden="true">
                     Prev
@@ -143,9 +175,6 @@
           </div>
           
           <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
-
-   
-
 <script>
 
 document.getElementById("survey-form").addEventListener("submit", (e) => {
@@ -153,8 +182,6 @@ document.getElementById("survey-form").addEventListener("submit", (e) => {
 
 const form = document.getElementById("survey-form");
  const backendResponse = postToAPI()
-
-
 })
 
 const postToAPI = async () => {
@@ -186,10 +213,7 @@ function Survey(survey) {
     const question3CheckBoxes = survey.querySelectorAll("[name='question_3']");
     const question4Radios = survey.querySelectorAll("[name='question_4']");
     const question4Textarea = survey.querySelector("[name='recommendText']");
-    const question5Name = survey.querySelector("[name='name']");
-    const question5Email = survey.querySelector("[name='email']");
-    const question5Country = survey.querySelector("[name='country']");
-    const question5Age = document.querySelector("[name='age']");
+    const question_5_Radio = survey.querySelector("[name='name']");
     const allPanels = Array.from(survey.querySelectorAll(".survey__panel"));
     let progressbarStep = Array.from(
       progressbar.querySelectorAll(".progressbar__step ")
@@ -207,11 +231,8 @@ function Survey(survey) {
       question2Radios,
       question3CheckBoxes,
       question4Radios,
-      question4Textarea,
-      question5Name,
-      question5Email,
-      question5Country,
-      question5Age
+     
+    
     };
     let dontSubmit = false;
   

@@ -6,11 +6,13 @@ function Survey(survey) {
     // select the elements
     const progressbar = survey.querySelector(".progressbar");
     const surveyPanels = survey.querySelectorAll(".survey__panel");
-    const question1Radios = survey.querySelectorAll("[name='preg_genero']");
+    const question_1_radios = survey.querySelectorAll("[name='question_1']");
     const question2Radios = survey.querySelectorAll("[name='question_2']");
     const question3CheckBoxes = survey.querySelectorAll("[name='question_3']");
     const question4Radios = survey.querySelectorAll("[name='question_4']");
-    const question4Textarea = survey.querySelector("[name='recommendText']");
+    const question_5_radios = survey.querySelectorAll("[name='question_5']");
+    
+    
     const question5Name = survey.querySelector("[name='name']");
     const question5Email = survey.querySelector("[name='email']");
     const question5Country = survey.querySelector("[name='country']");
@@ -28,11 +30,11 @@ function Survey(survey) {
     )[0];
     const formData = {};
     const options = {
-      question1Radios,
+      question_1_radios,
       question2Radios,
       question3CheckBoxes,
       question4Radios,
-      question4Textarea,
+      question_5_radios,
       question5Name,
       question5Email,
       question5Country,
@@ -225,7 +227,7 @@ function Survey(survey) {
         prevButton.disabled = false;
         prevButton.setAttribute("aria-hidden", false);
       }
-      if (+currentPanel.dataset.index === 5) {
+      if (+currentPanel.dataset.index === 6) {
         nextButton.disabled = true;
         nextButton.setAttribute("aria-hidden", true);
         submitButton.disabled = false;
@@ -244,7 +246,7 @@ function Survey(survey) {
         prevButton.disabled = true;
         prevButton.setAttribute("aria-hidden", true);
       }
-      if (+currentPanel.dataset.index < 5) {
+      if (+currentPanel.dataset.index < 6) {
         nextButton.disabled = false;
         nextButton.setAttribute("aria-hidden", false);
         submitButton.disabled = true;
@@ -285,13 +287,14 @@ function Survey(survey) {
   
     // Add event listeners
     function addListenersTo({
-      question1Radios,
+      question_1_radios,
       question2Radios,
       question3CheckBoxes,
       question4Radios,
+      question_5_radios,
       ...inputs
     }) {
-      question1Radios.forEach((elem) =>
+      question_1_radios.forEach((elem) =>
         elem.addEventListener("change", updateFormData)
       );
       question2Radios.forEach((elem) =>
@@ -303,14 +306,17 @@ function Survey(survey) {
       question4Radios.forEach((elem) =>
         elem.addEventListener("change", updateFormData)
       );
+
+      question_5_radios.forEach((elem) =>
+      elem.addEventListener("change", updateFormData)
+    );
+      
       let {
-        question4Textarea,
         question5Name,
         question5Email,
         question5Country,
         question5Age
       } = inputs;
-      question4Textarea.addEventListener("change", updateFormData);
       question5Name.addEventListener("change", updateFormData);
       question5Email.addEventListener("change", updateFormData);
       question5Country.addEventListener("change", updateFormData);
@@ -327,3 +333,27 @@ function Survey(survey) {
 
   ///////////////////////////////
 
+  document.getElementById("survey-form").addEventListener("submit", (e) => {
+    e.preventDefault()
+
+const form = document.getElementById("survey-form");
+ const backendResponse = postToAPI()
+
+
+})
+
+const postToAPI = async () => {
+// Se arma el body en formato JSON (igual que en postman)
+const body = {
+}
+// Se ejecuta la request
+const backResponse = await fetch('http://127.0.0.1:5000/predict', {
+    headers: {
+        "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify(body)
+})
+// Retornamos la respuesta del backend
+return await backResponse.json()
+}
