@@ -178,10 +178,7 @@ label {
   background-color: var(--lightGreen);
 }
 
-.progressbar__step:nth-child(2)::after,
-.progressbar__step:nth-child(3)::after,
-.progressbar__step:nth-child(4)::after,
-.progressbar__step:nth-child(5)::after {
+.progressbar__step:nth-child(n+2)::after {
   content: "";
   position: absolute;
   left: -100%;
@@ -192,10 +189,7 @@ label {
   background-color: var(--lightBlue);
 }
 
-.progressbar__step.active:nth-child(2)::after,
-.progressbar__step.active:nth-child(3)::after,
-.progressbar__step.active:nth-child(4)::after,
-.progressbar__step.active:nth-child(5)::after {
+.progressbar__step.active:nth-child(n+2)::after {
   background-color: var(--lightGreen);
 }
 
@@ -284,6 +278,7 @@ label {
 .survey__panel__period label:hover,
 .survey__panel__period [type="radio"]:checked + label {
   border-color: var(--intenseBlue);
+  background: aliceblue;
 }
 
 .review__period [type="radio"]:checked + label {
