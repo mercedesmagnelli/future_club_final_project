@@ -167,6 +167,19 @@
           <p class="error-message"></p>
         </section>
 
+        <section class="survey__panel" aria-hidden="true" data-index="6" data-panel="sixthPanel">
+          <h2 class="survey__panel__question">
+            <span class="visuallyhidden">Question 6 of 7 </span>¿Cuál es tu nivel de glucosa?
+          </h2>
+          <div class="survey__panel__period">
+            <div class="form-group">
+              <input id="res_rural" type="number" name="question_6" />
+            </div>
+           
+          </div>
+          <p class="error-message"></p>
+        </section>
+
 
 
         <div class="form-buttons">
@@ -224,7 +237,7 @@
       const question4Radios = survey.querySelectorAll("[name='question_4']");
       const question_5_Radio = survey.querySelectorAll("[name='question_5']");
       const question_6_Radio = survey.querySelectorAll("[name='question_6']");
-
+      const question_7 = survey.querySelectorAll("[name='question_7']");
 
 
 
@@ -246,7 +259,8 @@
         question3CheckBoxes,
         question4Radios,
         question_5_Radio,
-        question_6_Radio
+        question_6_Radio, 
+        question_7
       };
       let dontSubmit = false;
 
@@ -429,7 +443,7 @@
           prevButton.disabled = false;
           prevButton.setAttribute("aria-hidden", false);
         }
-        if (+currentPanel.dataset.index === 6) {
+        if (+currentPanel.dataset.index === 7) {
           nextButton.disabled = true;
           nextButton.setAttribute("aria-hidden", true);
           submitButton.disabled = false;
@@ -448,7 +462,7 @@
           prevButton.disabled = true;
           prevButton.setAttribute("aria-hidden", true);
         }
-        if (+currentPanel.dataset.index < 6) {
+        if (+currentPanel.dataset.index < 7) {
           nextButton.disabled = false;
           nextButton.setAttribute("aria-hidden", false);
           submitButton.disabled = true;
@@ -495,6 +509,7 @@
         question4Radios,
         question_5_Radio,
         question_6_Radio,
+        question_7,
         ...inputs
       }) {
         question1Radios.forEach((elem) =>
@@ -515,6 +530,10 @@
         question_6_Radio.forEach((elem) =>
           elem.addEventListener("change", updateFormData)
         );
+        question_7.forEach((elem) =>
+          elem.addEventListener("change", updateFormData)
+        );
+
         let {
 
         } = inputs;
