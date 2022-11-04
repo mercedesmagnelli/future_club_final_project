@@ -17,13 +17,13 @@
       <p id="description" class="header__description">
         Ingresá tus datos para calcular si hay probabilidades de que sufras un ACV.
       </p>
-      <img src="" alt="" aria-hidden="true" class="illustration" />
+      <img src="../static/brain_pic.png" alt="" aria-hidden="true" class="illustration" />
     </header>
     <main class="main">
       <form action="#" method="GET" id="survey-form" class="survey" novalidate>
-        <div class="progressbar" tabindex="0" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"
-          aria-valuetext="Question 1 of 5: How long have you been using our product?">
+        <div class="progressbar" tabindex="0" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1">
           <span class="progressbar__step active" aria-hidden="true"></span>
+          <span class="progressbar__step" aria-hidden="true"></span>
           <span class="progressbar__step" aria-hidden="true"></span>
           <span class="progressbar__step" aria-hidden="true"></span>
           <span class="progressbar__step" aria-hidden="true"></span>
@@ -167,20 +167,85 @@
           <p class="error-message"></p>
         </section>
 
-        <section class="survey__panel" aria-hidden="true" data-index="6" data-panel="sixthPanel">
+        <section class="survey__panel" aria-hidden="true" data-index="7" data-panel="sixthPanel">
           <h2 class="survey__panel__question">
-            <span class="visuallyhidden">Question 6 of 7 </span>¿Cuál es tu nivel de glucosa?
+            <span class="visuallyhidden">Question 7 of 9 </span>¿Cuál es tu nivel de glucosa?
+          </h2>
+
+          <div class="survey__panel__period">
+
+           <input id="res_rural" type="number" name="question_6" />
+          
+          </div>
+          <p class="error-message"></p>
+        </section>
+
+        <section class="survey__panel" aria-hidden="true" data-index="8" data-panel="sixthPanel">
+          <h2 class="survey__panel__question">
+            <span class="visuallyhidden">Question 8 of 9 </span>¿Cuál es tu edad? 
           </h2>
           <div class="survey__panel__period">
             <div class="form-group">
-              <input id="res_rural" type="number" name="question_6" />
+              <input id="res_rural" type="number" name="question_8" />
             </div>
            
           </div>
           <p class="error-message"></p>
         </section>
 
+        <section class="survey__panel" aria-hidden="true" data-index="9" data-panel="sixthPanel">
+          <h2 class="survey__panel__question">
+            <span class="visuallyhidden">Question 9 of 10 </span>¿Cuál es tu peso? ¿Y altura? 
+          </h2>
+          <div>
+            <div class="survey__panel__period">
+              <div class="form-group">
+                <input id="height" type="number" name="question_9_height" placeholder="Peso en kilos"/>
+            </div>
+           </div>
+           <div>
+            <div class="survey__panel__period">
+              <div class="form-group">
+                <input id="wheight" type="number" name="question_9_wheight" placeholder="Altura en centímetros" />
+            </div>
 
+           </div>
+
+          </div>
+          <p class="error-message"></p>
+        </section>
+
+        <section class="survey__panel" aria-hidden="true" data-index="10" data-panel="tenthPanel">
+          <h2 class="survey__panel__question">
+            <!--
+                        acá creo que debería poner otra clase para que se centre mejor pero por ahora 
+                        que funcion así
+                    -->
+            <span class="visuallyhidden">Question 10 of 10 </span>¿Qué tan frecuentemente fumas?
+          </h2>
+          <div>
+            <div class="survey__panel__personaldetails">
+              <div class="survey__panel__period">
+                <div class="form-group">
+                  <input id="smokes_never" type="radio" name="question_10" value="never smoked" />
+                  <label for="smokes_never">Nunca Fumé </label>
+                </div>
+                <div class="survey__panel__period">
+                  <div class="form-group">
+                    <input id="smokes_formerly" type="radio" name="question_10" value="formerly smoked" />
+                    <label for="smokes_formerly">Fumé, pero ya no</label>
+                  </div>
+                </div>
+                    <div class="survey__panel__personaldetails">
+                      <div class="survey__panel__period">
+                        <div class="form-group">
+                          <input id="smokes" type="radio" name="question_10" value="smokes" />
+                          <label for="smokes">Actualmente fumo</label>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="error-message"></p>
+        </section>
 
         <div class="form-buttons">
           <button class="button" type="button" name="prev" disabled="disabled" aria-label="Previous" aria-hidden="true">
@@ -202,7 +267,12 @@
       e.preventDefault()
 
       const form = document.getElementById("survey-form");
+     //le hago el post a la api
       const backendResponse = postToAPI()
+      showPredictionResponse(backendResponse);
+      //espero que me mande la respuesta y luego la muestro 
+      
+      
     })
 
     const postToAPI = async () => {
@@ -219,6 +289,12 @@
       })
       // Retornamos la respuesta del backend
       return await backResponse.json()
+    }
+
+    function showPredictionResponse(predictionResponse) {
+
+            
+
     }
 
     function Survey(survey) {
@@ -238,7 +314,10 @@
       const question_5_Radio = survey.querySelectorAll("[name='question_5']");
       const question_6_Radio = survey.querySelectorAll("[name='question_6']");
       const question_7 = survey.querySelectorAll("[name='question_7']");
-
+      const question_8 = survey.querySelectorAll("[name='question_8']");
+      const question_9_height = survey.querySelectorAll("[name='question_9_height']");
+      const question_9_weight = survey.querySelectorAll("[name='question_9_weight']");
+      const question_10 = survey.querySelectorAll("[name='question_10']");
 
 
       const allPanels = Array.from(survey.querySelectorAll(".survey__panel"));
@@ -260,7 +339,11 @@
         question4Radios,
         question_5_Radio,
         question_6_Radio, 
-        question_7
+        question_7, 
+        question_8,
+        question_9_height,
+       question_9_weight,
+       question_10
       };
       let dontSubmit = false;
 
@@ -400,8 +483,8 @@
         const index = currentPanel.dataset.index;
         const errorElement = currentPanel.querySelector(".error-message");
 
-        if (!formData[index].hasOwnProperty("answer") && +index === 5) {
-        } else if (formData[index].hasOwnProperty("answer") && +index === 5) {
+        if (!formData[index].hasOwnProperty("answer") && +index === 10) {
+        } else if (formData[index].hasOwnProperty("answer") && +index === 10) {
           const req = requirement.split(";");
           let data = Object.keys(formData[index].answer);
           let arr = [];
@@ -411,7 +494,7 @@
             arr.push(res);
           }
           if (
-            arr.length === 4 &&
+            arr.length === 9 &&
             arr.every((elem) => formData[index].answer.hasOwnProperty(elem))
           ) {
             survey.classList.remove("form-error");
@@ -443,7 +526,7 @@
           prevButton.disabled = false;
           prevButton.setAttribute("aria-hidden", false);
         }
-        if (+currentPanel.dataset.index === 7) {
+        if (+currentPanel.dataset.index === 10) {
           nextButton.disabled = true;
           nextButton.setAttribute("aria-hidden", true);
           submitButton.disabled = false;
@@ -462,12 +545,13 @@
           prevButton.disabled = true;
           prevButton.setAttribute("aria-hidden", true);
         }
-        if (+currentPanel.dataset.index < 7) {
+        if (+currentPanel.dataset.index < 10) {
           nextButton.disabled = false;
           nextButton.setAttribute("aria-hidden", false);
           submitButton.disabled = true;
           submitButton.setAttribute("aria-hidden", true);
         }
+
       }
 
       function handleprevButton() {
@@ -484,20 +568,6 @@
         }
       }
 
-      // submitting the form
-      function handleFormSubmit(e) {
-        checkRequirements();
-        if (!dontSubmit) {
-          e.preventDefault();
-        } else {
-          mainElement.classList.add("submission");
-          mainElement.setAttribute("role", "alert");
-          mainElement.innerHTML = `<svg width="126" height="118" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 118" aria-hidden="true" style="transform: translateX(50%)"><path d="M52.5 118c28.995 0 52.5-23.729 52.5-53S81.495 12 52.5 12 0 35.729 0 65s23.505 53 52.5 53z" fill="#B9CCED"/><path d="M45.726 87L23 56.877l8.186-6.105 15.647 20.74L118.766 0 126 7.192 45.726 87z" fill="#A7E9AF"/></svg>
-        <h2 class="submission">Thanks for your time</h2>
-        <p>The form was successfully submitted`;
-          return false;
-        }
-      }
 
       storeInitialData();
 
@@ -510,6 +580,10 @@
         question_5_Radio,
         question_6_Radio,
         question_7,
+        question_8,
+        question_9_height,
+        question_9_weight,
+        question_10,
         ...inputs
       }) {
         question1Radios.forEach((elem) =>
@@ -533,7 +607,15 @@
         question_7.forEach((elem) =>
           elem.addEventListener("change", updateFormData)
         );
-
+        question_8.forEach((elem) =>
+          elem.addEventListener("change", updateFormData)
+        );
+        question_9_weight.forEach((elem) =>
+          elem.addEventListener("change", updateFormData)
+        );
+        question_9_height.forEach((elem) =>
+          elem.addEventListener("change", updateFormData)
+        );
         let {
 
         } = inputs;
@@ -542,7 +624,6 @@
       nextButton.addEventListener("click", handleNextButton);
       prevButton.addEventListener("click", handleprevButton);
       addListenersTo(options);
-      survey.addEventListener("submit", handleFormSubmit);
     }
 
     const survey = Survey(document.querySelector(".survey"));

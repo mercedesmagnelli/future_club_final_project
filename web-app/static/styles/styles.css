@@ -92,23 +92,6 @@ button:-moz-focusring,
   height: auto;
 }
 
-.github-corner {
-  background-color: transparent;
-  text-decoration: none;
-}
-.github-corner svg {
-  position: absolute;
-  right: 0;
-  top: 0;
-  border: 0;
-  fill: rgba(92, 42, 157, 0.8);
-  transition: fill 0.25s ease-in-out;
-  z-index: 1;
-}
-
-.github-corner svg:hover {
-  fill: #5c2a9d;
-}
 
 .header {
   align-self: center;
@@ -249,6 +232,11 @@ label {
   display: block;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .survey__panel__period {
   display: grid;
   grid-gap: 13px;
@@ -405,7 +393,7 @@ label {
 }
 
 .survey__panel__personaldetails .form-group {
-  margin: 1rem 0;
+  margin: 2rem 0;
 }
 
 .survey__panel__personaldetails .name,
@@ -476,3 +464,4 @@ button[disabled] {
   white-space: nowrap;
   width: 1px;
 }
+
