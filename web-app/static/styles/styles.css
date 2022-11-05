@@ -477,3 +477,14 @@ button[disabled] {
     justify-content: center;
     height: 100%;
 }
+
+.numericInput {
+  display: inline-block;
+  position: relative;
+  padding: 15px 30px;
+  border: 2px solid var(--lightBlue);
+  text-align: left;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
