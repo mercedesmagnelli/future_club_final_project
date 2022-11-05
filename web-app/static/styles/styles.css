@@ -380,7 +380,7 @@ input::-webkit-inner-spin-button {
   position: absolute;
   left: 4px;
   top: 7px;
-  width: 2px;
+  width: 2px;|
   height: 2px;
   background-color: var(--whiteClr);
   box-shadow: 2px 0 0 var(--whiteClr), 4px 0 0 var(--whiteClr),
@@ -463,5 +463,9 @@ button[disabled] {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.hidden{
+  display: none
 }
 

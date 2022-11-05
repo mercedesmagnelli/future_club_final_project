@@ -167,52 +167,52 @@
           <p class="error-message"></p>
         </section>
 
-        <section class="survey__panel" aria-hidden="true" data-index="7" data-panel="sixthPanel">
+        <section class="survey__panel" aria-hidden="true" data-index="7" data-panel="seventhPanel">
           <h2 class="survey__panel__question">
             <span class="visuallyhidden">Question 7 of 9 </span>¿Cuál es tu nivel de glucosa?
           </h2>
 
           <div class="survey__panel__period">
 
-           <input id="res_rural" type="number" name="question_6" />
-          
+            <input id="res_rural" type="number" name="question_7" />
+
           </div>
           <p class="error-message"></p>
         </section>
 
-        <section class="survey__panel" aria-hidden="true" data-index="8" data-panel="sixthPanel">
+        <section class="survey__panel" aria-hidden="true" data-index="8" data-panel="eighthPanel">
           <h2 class="survey__panel__question">
-            <span class="visuallyhidden">Question 8 of 9 </span>¿Cuál es tu edad? 
+            <span class="visuallyhidden">Question 8 of 9 </span>¿Cuál es tu edad?
           </h2>
           <div class="survey__panel__period">
             <div class="form-group">
               <input id="res_rural" type="number" name="question_8" />
             </div>
-           
+
           </div>
           <p class="error-message"></p>
         </section>
 
         <section class="survey__panel" aria-hidden="true" data-index="9" data-panel="sixthPanel">
           <h2 class="survey__panel__question">
-            <span class="visuallyhidden">Question 9 of 10 </span>¿Cuál es tu peso? ¿Y altura? 
+            <span class="visuallyhidden">Question 9 of 10 </span>¿Cuál es tu peso? ¿Y altura?
           </h2>
           <div>
             <div class="survey__panel__period">
               <div class="form-group">
-                <input id="height" type="number" name="question_9_height" placeholder="Peso en kilos"/>
+                <input id="height" type="number" name="question_9_height" placeholder="Peso en kilos" />
+              </div>
             </div>
-           </div>
-           <div>
-            <div class="survey__panel__period">
-              <div class="form-group">
-                <input id="wheight" type="number" name="question_9_wheight" placeholder="Altura en centímetros" />
+            <div>
+              <div class="survey__panel__period">
+                <div class="form-group">
+                  <input id="wheight" type="number" name="question_9_weight" placeholder="Altura en centímetros" />
+                </div>
+
+              </div>
+
             </div>
-
-           </div>
-
-          </div>
-          <p class="error-message"></p>
+            <p class="error-message"></p>
         </section>
 
         <section class="survey__panel" aria-hidden="true" data-index="10" data-panel="tenthPanel">
@@ -236,16 +236,29 @@
                     <label for="smokes_formerly">Fumé, pero ya no</label>
                   </div>
                 </div>
-                    <div class="survey__panel__personaldetails">
-                      <div class="survey__panel__period">
-                        <div class="form-group">
-                          <input id="smokes" type="radio" name="question_10" value="smokes" />
-                          <label for="smokes">Actualmente fumo</label>
-                        </div>
-                      </div>
+                <div class="survey__panel__personaldetails">
+                  <div class="survey__panel__period">
+                    <div class="form-group">
+                      <input id="smokes" type="radio" name="question_10" value="smokes" />
+                      <label for="smokes">Actualmente fumo</label>
                     </div>
-                    <p class="error-message"></p>
+                  </div>
+                </div>
+                <p class="error-message"></p>
         </section>
+
+        <section class="survey__panel" aria-hidden="true" data-index="11" data-panel="finalPanel" name="final">
+          <h2 class="survey__panel__question">
+            <span class="visuallyhidden">Respuesta </span>¿Pertenecés a un grupo de riesgo?
+          </h2>
+          <p>
+            Sos riesgoso
+          </p>
+          <p class="error-message"></p>
+        </section>
+
+
+
 
         <div class="form-buttons">
           <button class="button" type="button" name="prev" disabled="disabled" aria-label="Previous" aria-hidden="true">
@@ -257,45 +270,18 @@
           </button>
         </div>
       </form>
+      <div class="hidden" id="response" aria-hidden="true">
+        <p> holaa :) </p>
+
+      </div>
     </main>
   </div>
 
   <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
   <script>
 
-    document.getElementById("survey-form").addEventListener("submit", (e) => {
-      e.preventDefault()
 
-      const form = document.getElementById("survey-form");
-     //le hago el post a la api
-      const backendResponse = postToAPI()
-      showPredictionResponse(backendResponse);
-      //espero que me mande la respuesta y luego la muestro 
-      
-      
-    })
 
-    const postToAPI = async () => {
-      // Se arma el body en formato JSON (igual que en postman)
-      const body = {
-      }
-      // Se ejecuta la request
-      const backResponse = await fetch('http://127.0.0.1:5000/predict', {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(body)
-      })
-      // Retornamos la respuesta del backend
-      return await backResponse.json()
-    }
-
-    function showPredictionResponse(predictionResponse) {
-
-            
-
-    }
 
     function Survey(survey) {
       if (!survey) {
@@ -318,7 +304,7 @@
       const question_9_height = survey.querySelectorAll("[name='question_9_height']");
       const question_9_weight = survey.querySelectorAll("[name='question_9_weight']");
       const question_10 = survey.querySelectorAll("[name='question_10']");
-
+      const final_answer = survey.querySelectorAll("[name='final']");
 
       const allPanels = Array.from(survey.querySelectorAll(".survey__panel"));
       let progressbarStep = Array.from(
@@ -338,14 +324,73 @@
         question3CheckBoxes,
         question4Radios,
         question_5_Radio,
-        question_6_Radio, 
-        question_7, 
+        question_6_Radio,
+        question_7,
         question_8,
         question_9_height,
-       question_9_weight,
-       question_10
+        question_9_weight,
+        question_10
+        //final_answer
       };
       let dontSubmit = false;
+
+
+      document.getElementById("survey-form").addEventListener("submit", (e) => {
+        e.preventDefault() 
+        procesarYMostrar();
+       
+        //espero que me mande la respuesta y luego la muestro 
+      })
+
+      const procesarYMostrar = async () => {
+        const backendResponse = await postToAPI();
+        console.log(backendResponse.key);
+        showPredictionResponse(backendResponse);
+
+      }
+
+      const postToAPI = async () => {
+        // Se arma el body en formato JSON (igual que en postman)
+       
+       const formulario = document.getElementById('survey-form')
+   
+        const body = {
+          'gender': formulario.question_1.value,
+          'age': formulario.question_8.value,
+          'hypertension':  formulario.question_2.value,
+          'heart':  formulario.question_3.value,
+          'married':  formulario.question_4.value,
+          'work':  formulario.question_5.value,
+          'residence': formulario.question_6.value,
+          'glucose': formulario.question_7.value,
+          'height': formulario.question_9_height.value,
+          'wheight': formulario.question_9_weight.value,
+          'smokes': formulario.question_10.value
+        }
+        console.log(body)
+        // Se ejecuta la request
+        const backResponse = await fetch('http://127.0.0.1:5000/predict', {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: JSON.stringify(body)
+        })
+        // Retornamos la respuesta del backend
+        return await backResponse.json()
+      }
+
+      function showPredictionResponse(predictionResponse) {
+
+        const formulario = document.getElementById('survey-form')
+        const respuesta = document.getElementById('response')
+        formulario.classList.add('hidden');
+        respuesta.classList.remove('hidden');
+        
+
+      }
+
+
 
       function storeInitialData() {
         allPanels.map((panel) => {
@@ -532,6 +577,7 @@
           submitButton.disabled = false;
           submitButton.setAttribute("aria-hidden", false);
         }
+
       }
 
       function displayPrevPanel() {
@@ -583,7 +629,6 @@
         question_8,
         question_9_height,
         question_9_weight,
-        question_10,
         ...inputs
       }) {
         question1Radios.forEach((elem) =>
