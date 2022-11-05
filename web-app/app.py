@@ -8,6 +8,7 @@ from flask import Request
 from flask import Response
 import urllib3
 import json
+import math
 # from flask_wtf import FlaskForm
 
 app = Flask(__name__, instance_relative_config=False)
@@ -27,12 +28,13 @@ def predict():
       # NOTE: generate iam_token and retrieve ml_instance_id based on provided documentation
 
         requestValues = request.get_json()
-        print(requestValues)
+        print(requestValues);
+
        
         header = {'Content-Type': 'application/json', 'Authorization': 'Bearer '
                  + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpGdExSb3BtNUl3N0hMUGhXMzg4S3pJOXpsWkExaUVHaGRoMXFUeXpmRGMifQ.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciIsImNhbl9wcm92aXNpb24iLCJtYW5hZ2VfY2F0YWxvZyIsImNyZWF0ZV9wcm9qZWN0IiwiY3JlYXRlX3NwYWNlIiwiYWNjZXNzX2NhdGFsb2ciLCJzaWduX2luX29ubHkiXSwiZ3JvdXBzIjpbMTAwMDBdLCJzdWIiOiJhZG1pbiIsImlzcyI6IktOT1hTU08iLCJhdWQiOiJEU1giLCJ1aWQiOiIxMDAwMzMwOTk5IiwiYXV0aGVudGljYXRvciI6ImRlZmF1bHQiLCJkaXNwbGF5X25hbWUiOiJhZG1pbiIsImlhdCI6MTY2NzU4NjIxMywiZXhwIjoxNjY3NjI5Mzc3fQ.co54f3JJ_P2GoxoEaplyJIdB4QRT8jtV1G1qRpnCWTKIVSd7aVjTt7Tn-lo-j5Wm3dPf9_2fasx6K1Wpvk3vp7vo8cOC2TVw_pycDFLKezcpMRVDB5g5A6qdZJvXDDdjVwXt_OhB2I3PDt2u3TzBNHsq3nbq9Wrlb6N0K8IVFU4LFikNPHwBn0aN3EODvWhV371xtu3RM3tU7Qn_MOYfx46RDcRTfFRYpzOoT3MIFIFvJ7foeyKm27hok4nr6GfxSFV--xQ0ApYEeTx8-Ulrn2L9OeVlWQDzBNyYv2cB72x_0HaMIl_XbXWqOQi7chhqu26e4Ds63jH0LFr1yYe9Sw"}
-
-        python_object = ["male",79,0,1,"no","private","urban",98.4,25.2,"former smoker"]
+        bmi = float(requestValues['weight']) / math.pow(float(requestValues['height']), 2) 
+        python_object = [requestValues['gender'], requestValues['age'], requestValues['hypertension'], requestValues['heart'], requestValues['married'],requestValues['work'],requestValues['residence'], requestValues['glucose'], bmi , requestValues['smokes']]
       
         #Transform python objects to  Json
 

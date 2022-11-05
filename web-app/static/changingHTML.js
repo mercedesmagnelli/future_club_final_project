@@ -7,16 +7,14 @@ document.getElementById("survey-form").addEventListener("submit", (e) => {
     const backendResponse = await postToAPI();
     console.log(backendResponse.key);
     showPredictionResponse(backendResponse);
-
   }
 
   const postToAPI = async () => {
     // Se arma el body en formato JSON (igual que en postman)
    
    const formulario = document.getElementById('survey-form')
-
-    const body = {
-      'gender': formulario.question_1.value,
+   const body = {
+      "gender": formulario.question_1.value,
       'age': formulario.question_8.value,
       'hypertension':  formulario.question_2.value,
       'heart':  formulario.question_3.value,
@@ -25,7 +23,7 @@ document.getElementById("survey-form").addEventListener("submit", (e) => {
       'residence': formulario.question_6.value,
       'glucose': formulario.question_7.value,
       'height': formulario.question_9_height.value,
-      'wheight': formulario.question_9_weight.value,
+      'weight': formulario.question_9_weight.value,
       'smokes': formulario.question_10.value
     }
     console.log(body)
@@ -47,6 +45,7 @@ document.getElementById("survey-form").addEventListener("submit", (e) => {
     const respuesta = document.getElementById('response')
     formulario.classList.add('hidden');
     respuesta.classList.remove('hidden');
-    
+}
 
-  }
+
+

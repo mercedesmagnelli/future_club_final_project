@@ -4,11 +4,12 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="../static/styles/styles.css" />
+  <link rel="stylesheet" type="text/css" href="../static/styles/gradientStyles.css"/>
   <title>Predicción de accidente cardiovascular</title>
 
 </head>
 
-<body style="background-color: white">
+<body style="background-color: rgb(87 158 209 / 12%);">
 
 
   <div class="container">
@@ -200,13 +201,13 @@
           <div>
             <div class="survey__panel__period">
               <div class="form-group">
-                <input id="height" type="number" name="question_9_height" placeholder="Peso en kilos" />
+                <input id="height" type="number" name="question_9_weight" placeholder="Peso en kilos" />
               </div>
             </div>
             <div>
               <div class="survey__panel__period">
                 <div class="form-group">
-                  <input id="wheight" type="number" name="question_9_weight" placeholder="Altura en centímetros" />
+                  <input id="weight" type="number" name="question_9_height" placeholder="Altura en centímetros" />
                 </div>
 
               </div>
@@ -271,7 +272,9 @@
         </div>
       </form>
       <div class="hidden" id="response" aria-hidden="true">
-        <p> holaa :) </p>
+      	<label for="gradient-range" class="sr">Range</label>
+	      <span class="gr-glow">
+		    <input id="gradient-range" class="gr-input" type="range" value="50" min="0" max="100">
 
       </div>
     </main>
