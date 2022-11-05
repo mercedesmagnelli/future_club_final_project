@@ -40,6 +40,7 @@ body {
 .main {
   display: block;
   align-self: start;
+  height:100vh;
 }
 
 button,
@@ -120,7 +121,7 @@ h2.submission {
 }
 
 .illustration {
-  width: 100%;
+  width: 60%;
   border-style: none;
 }
 
@@ -469,3 +470,10 @@ button[disabled] {
   display: none
 }
 
+#response{
+  display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
